@@ -15,15 +15,15 @@ module.exports = {
 
         const embed = new EmbedBuilder()
             .setTitle(`${targetUser.username}'s info`)
-            .setThumbnail(targetUser.displayAvatarURL({ size: 4096 }))
+            .setImage(targetUser.displayAvatarURL({ size: 4096 }))
             .addFields(
                 { name: 'User ID', value: targetUser.id, inline: false },
                 { name: 'Account Created', value: targetUser.createdAt.toDateString(), inline: false },
                 { name: 'Account Joined', value: member.joinedAt ? member.joinedAt.toDateString() : 'N/A', inline:false }
             
             )
-            .setTimestamp() // Current time
-            .setColor('Random'); // Random color
+            .setTimestamp() 
+            .setColor('Random');
 
         await interaction.reply({ embeds: [embed] });
     }
