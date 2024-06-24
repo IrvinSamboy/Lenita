@@ -29,7 +29,7 @@ module.exports = {
 
         const [guild] = await Guild.findOrCreate({where: {id: interaction.guild.id}});
 
-        await guild.update({welcomeChannelId: channel.id, welcomeRoleId: role.id });
+        await guild.update({welcomeChannelId: channel.id, welcomeRoleId: role ? role.id : null});
 
         await interaction.reply(`Welcome channel set to ${channel} and role set to ${role}`);
     }

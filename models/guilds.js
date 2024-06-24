@@ -15,6 +15,10 @@ const Guild = sequelize.define('guilds', {
         type: Sequalize.STRING,
         allowNull: true,
     },
-})
+},
+{
+    freezeTableName: true 
+}
+)
 
 module.exports = Guild;

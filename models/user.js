@@ -6,11 +6,12 @@ const User = sequelize.define('user', {
         type: Sequalize.STRING,
         primaryKey: true,
         allowNull: false
-    },
-    xp: {
-        type: Sequalize.INTEGER,
-        defaultValue: 0
     }
-})
+},
+{
+    freezeTableName: true 
+}
+
+)
 
 module.exports = User;

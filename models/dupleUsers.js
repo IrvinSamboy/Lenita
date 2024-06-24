@@ -1,17 +1,17 @@
 const Sequalize = require('sequelize');
 const sequelize = require('../utils/database.js');
 
-const GuildUsers = sequelize.define('guildUsers', {
+const dupleUsers = sequelize.define('dupleUsers', {
     id: {
         type: Sequalize.INTEGER,
         autoIncrement: true,
         primaryKey: true,
     },
-    idGuild: {
+    idDuple: {
         type: Sequalize.STRING,
         allowNull: false,
         references: {
-            model: 'guilds',
+            model: 'duple',
             key: 'id',
         }
     },
@@ -23,15 +23,9 @@ const GuildUsers = sequelize.define('guildUsers', {
             key: 'id',
         }
     },
-    xp: {
-        type: Sequalize.INTEGER,
-        defaultValue: 0
-    }
 },
 {
     freezeTableName: true 
-}
-)
+})
 
-
-module.exports = GuildUsers;
+module.exports = dupleUsers;

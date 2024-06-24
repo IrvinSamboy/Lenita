@@ -15,9 +15,7 @@ module.exports = {
             const welcomeRole = guildData.welcomeRoleId;
             const welcomeChannel = guildData.welcomeChannelId;
 
-            if(!welcomeRole|| !welcomeChannel) return;
-            const role = await member.guild.roles.cache.find(role => role.id === welcomeRole);
-            if(!role) return
+            if(!welcomeChannel) return;
             const channel = await member.guild.channels.cache.find(channel => channel.id === welcomeChannel);
             const botMember = await member.guild.members.fetch(member.client.user.id);
 
@@ -26,16 +24,20 @@ module.exports = {
                 .setTitle('Error')
                 .setDescription('I need the `MANAGE_ROLES` permission to give the welcome role to the new members and the role must be higher than mine. Please check the permissions and the position of the role.');
 
-            if(!botMember.permissions.has(PermissionFlagsBits.ManageRoles) || botMember.roles.highest.comparePositionTo(role) <= 0) {
-                const message = await channel.send({ embeds: [EmbedErr] });
-                wait(60000);
-                return await message.delete();
+            if(welcomeRole){
+                const role = await member.guild.roles.cache.find(role => role.id === welcomeRole);
+                if(!role) return
+                if(!botMember.permissions.has(PermissionFlagsBits.ManageRoles) || botMember.roles.highest.comparePositionTo(role) <= 0) {
+                    const message = await channel.send({ embeds: [EmbedErr] });
+                    wait(60000);
+                    return await message.delete();
+                }
+    
+                await member.roles.add(role);
             }
 
-            await member.roles.add(role);
-
             if(!member.user.bot){
-                const userData = await User.findOrCreate({ where: { id: member.id } });
+                await User.findOrCreate({ where: { id: member.id } });
                 await GuildUsers.create({
                 idGuild: member.guild.id,
                 idUser: member.id,
